@@ -136,6 +136,7 @@ do -- mason-org/mason-lspconfig.nvim
       "tombi",
       "ty",
       "typos_lsp",
+      "clangd",
     },
     automatic_enable = {
       exclude = { "ansiblels" },

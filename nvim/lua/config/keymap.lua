@@ -1,7 +1,16 @@
-vim.keymap.set("n", "<C-h>", "<C-w><C-h>")
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>")
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>")
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>")
+-- To use `ALT+{h,j,k,l}` to navigate windows from any mode: >vim
+vim.keymap.set("n", "<A-h>", "<C-w><C-h>")
+vim.keymap.set("n", "<A-j>", "<C-w><C-j>")
+vim.keymap.set("n", "<A-k>", "<C-w><C-k>")
+vim.keymap.set("n", "<A-l>", "<C-w><C-l>")
+vim.keymap.set("i", "<A-h>", "<C-\\><C-N><C-w>h")
+vim.keymap.set("i", "<A-j>", "<C-\\><C-N><C-w>j")
+vim.keymap.set("i", "<A-k>", "<C-\\><C-N><C-w>k")
+vim.keymap.set("i", "<A-l>", "<C-\\><C-N><C-w>l")
+vim.keymap.set("t", "<A-h>", "<C-\\><C-N><C-w>h")
+vim.keymap.set("t", "<A-j>", "<C-\\><C-N><C-w>j")
+vim.keymap.set("t", "<A-k>", "<C-\\><C-N><C-w>k")
+vim.keymap.set("t", "<A-l>", "<C-\\><C-N><C-w>l")
 
 vim.keymap.set("n", "<C-Tab>", "gt")
 vim.keymap.set("n", "<C-S-Tab>", "gT")
@@ -15,42 +24,72 @@ vim.keymap.set("n", "zV", function()
 end, { desc = "Toggle conceals" })
 
 vim.keymap.set("n", "U", ":redo<CR>")
-vim.keymap.set("n", "<leader>cd", ":cd %:p:h<CR>")
+-- vim.keymap.set("n", "<leader>cd", ":cd %:p:h<CR>")
 
-vim.keymap.set("n", "<leader>]", "<cmd>lua = vim.diagnostic.goto_next()<CR>zz")
-vim.keymap.set("n", "<leader>[", "<cmd>lua = vim.diagnostic.goto_prev()<CR>zz")
+-- package management
+vim.keymap.set("n", "<leader>vm", function()
+  vim.cmd("Mason")
+end, { desc = "Mason package manager" })
 
-vim.keymap.set("n", "<leader>vl", "<cmd>Lazy<CR>")
-vim.keymap.set("n", "<leader>vm", "<cmd>Mason<CR>")
+vim.keymap.set("n", "<leader>vp", function()
+  vim.pack.update()
+end, { desc = "Manage and update packages" })
 
-vim.keymap.set("n", "<C-CR>", function()
-  vim.cmd("JupyterSendCell")
-end)
-vim.keymap.set("n", "<leader><CR>", function()
-  vim.cmd("JupyterSendCell")
-end)
+-- window shortcuts
+vim.keymap.set("n", "<leader>ws", "<cmd>split<CR>", { desc = "Window Split (hamburger)" })
+vim.keymap.set("n", "<leader>wv", "<cmd>vsplit<CR>", { desc = "Window Vertical split (hotdog)" })
+vim.keymap.set("n", "<leader>wo", "<C-w><C-o>", { desc = "Window Only this one" })
+vim.keymap.set("n", "<leader>w`", "<cmd>resize 6<CR>", { desc = "Set window to height to console (6 big)" })
+vim.keymap.set("n", "<leader>wh", "<C-w>_", { desc = "Maximize window height" })
+vim.keymap.set("n", "<leader>ww", "<C-w>|", { desc = "Maximize window width" })
+
+vim.keymap.set("n", "<leader>zx", "<cmd>set fdm=expr<CR>", { desc = "set foldmethod to expr" })
+vim.keymap.set("n", "<leader>zz", "<cmd>loadview<CR>", { desc = "set foldmethod to expr" })
+
 vim.keymap.set("n", "<esc>", function() end)
 
 vim.keymap.set("n", "tt", "<cmd>tabnew<CR>")
-vim.keymap.set("n", "<C-w>`", "<cmd>resize 6<CR>", { desc = "resize window to 6 big" })
+vim.keymap.set("n", "<C-w>`", "<cmd>resize 6<CR>", { desc = "resize window to mini (6 big)" })
+
+vim.keymap.set("n", "<A-[>", "<cmd>BufferPrevious<CR>", { desc = "Goto Previous buffer" })
+vim.keymap.set("n", "<A-]>", "<cmd>BufferNext<CR>", { desc = "Goto Next buffer" })
+vim.keymap.set("n", "gn", "<cmd>BufferNext<CR>", { desc = "Goto Next buffer" })
+vim.keymap.set("n", "gp", "<cmd>BufferPrevious<CR>", { desc = "Goto Previous buffer" })
+vim.keymap.set("n", "gd", "<cmd>BufferClose<CR>", { desc = "Go ahead and Delete this buffer" })
+vim.keymap.set("n", "go", "<cmd>BufferCloseAllButCurrentOrPinned<CR>", { desc = "close Other buffers" })
+vim.keymap.set("n", "gb", "<cmd>BufferLast<CR>", { desc = "Go Back to last buffer" })
+vim.keymap.set("n", "<C-p>", "<cmd>BufferPick<CR>", { desc = "Pick a buffer" })
+-- vim.keymap.set("n", "<C-P>", "<cmd>BufferPin<CR>", { desc = "Pin a buffer" })
+--
+-- List-producing LSP functions use the quickfix list by default, which keeps
+-- navigation on Vim's built-ins.
+local function diagnostics(all_buffers)
+  if all_buffers then
+    vim.diagnostic.setqflist({ open = true, title = "Diagnostics" })
+    return
+  end
+
+  local items = vim.diagnostic.toqflist(vim.diagnostic.get(vim.api.nvim_get_current_buf()))
+  vim.fn.setqflist(items, "r", { title = "Buffer diagnostics" })
+  vim.cmd("copen")
+end
 
 vim.keymap.set("n", "grd", "<cmd>lua vim.lsp.buf.definition()<CR>")
--- vim.keymap.set("n", "K", function() vim.lsp.buf.hover({close_events={"InsertLeave"}})end)
-vim.keymap.set({ "i", "n" }, "<C-s>", function()
-  vim.lsp.buf.signature_help({ close_events = { "InsertLeave" } })
-end)
-vim.keymap.set("n", "<leader>lh", function()
-  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end, { desc = "LSP toggle inlay Hints" })
-vim.keymap.set("n", "<leader>lf", function()
-  vim.lsp.buf.format()
-end, { desc = "LSP Format" })
-vim.keymap.set("n", "<leader>li", function()
-  vim.lsp.buf.incoming_calls()
-end, { desc = "LSP Incoming calls" })
+vim.keymap.set("n", "grD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
 
--- leave terminal float with normal movement shortcuts.
-vim.keymap.set("t", "<C-h>", "<C-\\><C-N><C-w>h")
-vim.keymap.set("t", "<C-j>", "<C-\\><C-N><C-w>j")
-vim.keymap.set("t", "<C-k>", "<C-\\><C-N><C-w>k")
-vim.keymap.set("t", "<C-l>", "<C-\\><C-N><C-w>l")
+vim.keymap.set("n", "<leader>xx", function()
+  diagnostics(true)
+end, { desc = "Diagnostics (quickfix)" })
+vim.keymap.set("n", "<leader>xX", function()
+  diagnostics(false)
+end, { desc = "Buffer diagnostics (quickfix)" })
+-- vim.keymap.set("n", "<leader>ls", vim.lsp.buf.document_symbol, { desc = "LSP symbols (quickfix)" })
+vim.keymap.set("n", "<leader>ls", "<cmd>AerialToggle!<CR>", { desc = "Aerial Symbol map" })
+-- vim.keymap.set("n", "<leader>la", vim.lsp.buf.workspace_symbol, { desc = "LSP workspace symbols (quickfix)" })
+vim.keymap.set("n", "<leader>lr", "<CMD>FzfLua lsp_references<CR>", { desc = "LSP references (fzf)" })
+vim.keymap.set("n", "<leader>li", "<CMD>FzfLua lsp_incoming_calls<CD>", { desc = "LSP incoming calls (fzf)" })
+vim.keymap.set("n", "<leader>li", "<CMD>FzfLua lsp_outgoing_calls<CD>", { desc = "LSP outgoing calls (fzf)" })
+vim.keymap.set("n", "<leader>lu", "<CMD>FzfLua lsp_implementations<CR>", { desc = "LSP implementations (fzf)" })
+vim.keymap.set("n", "<leader>lT", "<CMD>FzfLua lsp_type_sub<CR>", { desc = "LSP show subtypes (fzf)" })
+vim.keymap.set("n", "<leader>xL", "<cmd>lopen<CR>", { desc = "Open location list" })
+vim.keymap.set("n", "<leader>xQ", "<cmd>copen<CR>", { desc = "Open quickfix list" })

@@ -22,59 +22,66 @@
   }
 ]]
 
-do -- benlubas/molten-nvim
-  vim.g.molten_image_location = "float"
-  vim.g.molten_image_provider = "image.nvim"
-  vim.g.molten_output_win_max_height = 30
-  vim.g.molten_virt_text_max_lines = 18
-  vim.g.molten_auto_open_output = true
+if vim.env.MOLTEN_ENABLE == "1" then
+  do -- benlubas/molten-nvim
+    vim.g.molten_image_location = "float"
+    vim.g.molten_image_provider = "image.nvim"
+    vim.g.molten_output_win_max_height = 30
+    vim.g.molten_virt_text_max_lines = 18
+    vim.g.molten_auto_open_output = true
 
-  -- optional, I like wrapping. works for virt text and the output window
-  vim.g.molten_wrap_output = true
+    -- optional, I like wrapping. works for virt text and the output window
+    vim.g.molten_wrap_output = true
 
-  -- Output as virtual text. Allows outputs to always be shown, works with images, but can
-  -- be buggy with longer images
-  vim.g.molten_virt_text_output = true
+    -- Output as virtual text. Allows outputs to always be shown, works with images, but can
+    -- be buggy with longer images
+    vim.g.molten_virt_text_output = true
 
-  -- this will make it so the output shows up below the \`\`\` cell delimiter
-  vim.g.molten_virt_lines_off_by_1 = true
+    -- this will make it so the output shows up below the \`\`\` cell delimiter
+    vim.g.molten_virt_lines_off_by_1 = true
 
-  -- How often (in ms) we poll the kernel for updates.
-  -- Determines how quickly the ui will update, if you want a snappier experience, you can set this to 150 or 200
-  vim.g.molten_tick_rate = 500
-  vim.cmd("highlight clear MoltenCell")
+    -- How often (in ms) we poll the kernel for updates.
+    -- Determines how quickly the ui will update, if you want a snappier experience, you can set this to 150 or 200
+    vim.g.molten_tick_rate = 500
+    vim.cmd("highlight clear MoltenCell")
 
-  vim.keymap.set("n", "<leader>me", ":MoltenEvaluateOperator<CR>", { desc = "evaluate operator" })
-  vim.keymap.set("n", "<leader>mo", ":noautocmd MoltenEnterOutput<CR>", { desc = "open output window", silent = true })
-  vim.keymap.set(
-    "n",
-    "<leader>mO",
-    ":noautocmd MoltenImagePopup<CR>",
-    { desc = "open external output popup", silent = true }
-  )
-  vim.keymap.set("n", "<leader>mr", ":MoltenReevaluateCell<CR>", { desc = "re-eval cell", silent = true })
-  -- { "<leader>mv", ":<C-u>MoltenEvaluateVisual<CR>gv", desc = "execute visual selection", silent = true },
-  vim.keymap.set("n", "<leader>mx", ":MoltenHideOutput<CR>", { desc = "close output window", silent = true })
-  vim.keymap.set("n", "<leader>md", ":MoltenDelete<CR>", { desc = "delete Molten cell", silent = true })
-  vim.keymap.set("n", "<leader>mA", ":MoltenReevaluateAll<CR>", { desc = "Molten re-evaluate All", silent = true })
-  vim.keymap.set("n", "<leader>m.", ":MoltenInterrupt<CR>", { desc = "Molten Interrupt", silent = true })
-  -- { "<leader>mt", function()
-  --   vim.g.molten_auto_open_output = not vim.g.molten_auto_open_output
-  -- end, desc = "Molten toggle output", silent = true },
-  vim.keymap.set("n", "]p", ":MoltenNext<CR>", { desc = "juPyter (molten/quarto) next cell", silent = true })
-  vim.keymap.set(
-    "n",
-    "]P",
-    ":MoltenNext<CR>zt",
-    { desc = "juPyter (molten/quarto) next cell. Zoom Top", silent = true }
-  )
-  vim.keymap.set("n", "[p", ":MoltenPrev<CR>", { desc = "juPyter (molten/quarto) prev cell", silent = true })
-  vim.keymap.set(
-    "n",
-    "[P",
-    ":MoltenPrev<CR>zt",
-    { desc = "juPyter (molten/quarto) prev cell. Zoom Top", silent = true }
-  )
+    vim.keymap.set("n", "<leader>me", ":MoltenEvaluateOperator<CR>", { desc = "evaluate operator" })
+    vim.keymap.set(
+      "n",
+      "<leader>mo",
+      ":noautocmd MoltenEnterOutput<CR>",
+      { desc = "open output window", silent = true }
+    )
+    vim.keymap.set(
+      "n",
+      "<leader>mO",
+      ":noautocmd MoltenImagePopup<CR>",
+      { desc = "open external output popup", silent = true }
+    )
+    vim.keymap.set("n", "<leader>mr", ":MoltenReevaluateCell<CR>", { desc = "re-eval cell", silent = true })
+    -- { "<leader>mv", ":<C-u>MoltenEvaluateVisual<CR>gv", desc = "execute visual selection", silent = true },
+    vim.keymap.set("n", "<leader>mx", ":MoltenHideOutput<CR>", { desc = "close output window", silent = true })
+    vim.keymap.set("n", "<leader>md", ":MoltenDelete<CR>", { desc = "delete Molten cell", silent = true })
+    vim.keymap.set("n", "<leader>mA", ":MoltenReevaluateAll<CR>", { desc = "Molten re-evaluate All", silent = true })
+    vim.keymap.set("n", "<leader>m.", ":MoltenInterrupt<CR>", { desc = "Molten Interrupt", silent = true })
+    -- { "<leader>mt", function()
+    --   vim.g.molten_auto_open_output = not vim.g.molten_auto_open_output
+    -- end, desc = "Molten toggle output", silent = true },
+    vim.keymap.set("n", "]p", ":MoltenNext<CR>", { desc = "juPyter (molten/quarto) next cell", silent = true })
+    vim.keymap.set(
+      "n",
+      "]P",
+      ":MoltenNext<CR>zt",
+      { desc = "juPyter (molten/quarto) next cell. Zoom Top", silent = true }
+    )
+    vim.keymap.set("n", "[p", ":MoltenPrev<CR>", { desc = "juPyter (molten/quarto) prev cell", silent = true })
+    vim.keymap.set(
+      "n",
+      "[P",
+      ":MoltenPrev<CR>zt",
+      { desc = "juPyter (molten/quarto) prev cell. Zoom Top", silent = true }
+    )
+  end
 end
 
 do -- quarto-dev/quarto-nvim

@@ -1,5 +1,10 @@
--- vim.g.python3_host_prog = "~/.asdf/installs/python/3.11.7/bin/python"
-require("config.lazy")
+vim.g.python3_host_prog = "~/.nvim_venv/bin/python"
+require("config.pack")
+require("config.lspconfig")
+require("config.folds")
 require("config.global")
 require("config.keymap")
-require("config.lastplace")
+require("config.molten")
+require("config.workspaces")
+require("config.customcommands")
+require("config.autocommands")

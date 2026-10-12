@@ -131,12 +131,14 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "markdown" },
-  callback = function()
-    require("quarto").activate()
-  end,
-})
+if vim.env.MOLTEN_ENABLE == "1" then
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "markdown" },
+    callback = function()
+      require("quarto").activate()
+    end,
+  })
+end
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "gitcommit" },
