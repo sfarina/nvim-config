@@ -1,0 +1,68 @@
+promptToReturnFromSubprocess: false
+notARepository: 'quit'
+disableStartupPopups: true
+customCommands:
+  - key: "G"
+    command: "gh pr create --title {{.SelectedLocalBranch.Name}} --body=''"
+    context: "localBranches"
+    description: "Create Github PR"
+  - key: "S"
+    command: "gh repo sync"
+    context: "localBranches"
+    description: "Sync repo"
+  - key: "t"
+    command: "make format"
+    context: "files"
+    description: "make formaT"
+keybinding:
+  files:
+    viewResetOptions: <disabled>
+  commits:
+    viewResetOptions: X
+gui:
+  sidePanelWidth: 0.33
+  enlargedSideViewLocation: 'top'
+  branchColorPatterns:
+    '^DYS-\d+': '#dbbdd5'
+    '^(radio-staging|main|master)$': '#c900db'
+    '^renovate\/': '#0972af'
+    '^feat\/': '#9a3c07'
+    '^telegram-': '#a0d2f8'
+  authorColors:
+    'Salvatore Farina': '#00b3e6'
+  nerdFontsVersion: "3"
+  filterMode: fuzzy
+  showRandomTip: false
+  # Whether to show the divergence from the base branch in the branches view.
+  # One of: 'none' | 'onlyArrow'  | 'arrowAndNumber'
+  showDivergenceFromBaseBranch: 'arrowAndNumber'
+  spinner:
+    frames:
+      - "⠋"
+      - "⠙"
+      - "⠹"
+      - "⠸"
+      - "⠼"
+      - "⠴"
+      - "⠦"
+      - "⠧"
+      - "⠇"
+      - "⠏"
+    rate: 100
+  showNumstatInFilesView: true
+  mainPanelSplitMode: 'vertical'
+  skipAmendWarning: true
+  skipDiscardChangeWarning: false
+os:
+  editPreset: 'nvim'
+git:
+  overrideGpg: true
+  diffRenderers:
+    - command: delta --dark --paging=never
+    - command: delta --dark --paging=never --side-by-side
+  branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --"
+  diffContextSize: 1
+  parseEmoji: true
+  mainBranches:
+    - master
+    - main
