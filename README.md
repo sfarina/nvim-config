@@ -1,15 +1,19 @@
 # Neovim Config
 
 copy (or link) the `nvim` folder to `~/.config`
+
 ```shell
 cp -r nvim ~/.config/
 ```
+
 This is a public version of my private config (that includes other configs and is updated pretty frequently).
 
 ## Prerequisites
 
 ### Command line tools
+
 The following are highly suggested for the full neovim config to work, but not all required
+
 - lazygit
 - fzf
 - fd
@@ -19,23 +23,27 @@ The following are highly suggested for the full neovim config to work, but not a
 ```shell
 brew install fd ripgrep fzf lazygit imagemagick
 ```
+
 ### nodejs
+
 Some tools (like mason being able to automatically configure LSPs) will require a working npm.
 
 I use [asdf](http://asdf-vm.com) to manage versions among a long list of dependencies:
 
 ### Terminal
+
 some features (mostly in editor image rendering) require a modern terminal emulator.
 
-I have been really enjoying [KiTTY](https://sw.kovidgoyal.net/kitty/)
+I have been really enjoying [Ghostty](https://ghostty.org)
 
-A config for kitty is included.
+A config for Ghostty is included.
 
 ### Fonts
+
 I like to use "Sauce Code Pro" as my default font. It has support for all manner of weird glyphs required for cute stuff like the status line. Available [here](https://www.nerdfonts.com/font-downloads).
 
-
 ## Neovim Config
+
 - lua/plugins:
   - defines all the external plugins, their settings, and key bindings.
   - Loosely grouped into categories.
@@ -71,7 +79,6 @@ I like to use "Sauce Code Pro" as my default font. It has support for all manner
   - `<leader>xx` open all diagnostics from open buffers with Trouble
   - While writing arguments to a function, press <Ctrl-s) to pop-up the signature and help for that function.
   - <leader-a> open a minimal display showing the high level document symbols with Aerial. Navigate functions with { and }
-
 - `<leader>s` manage "Snacks"
   - `z` zen mode
   - `i` toggle indentation guides
