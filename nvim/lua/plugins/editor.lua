@@ -98,9 +98,27 @@ do -- luarocks/hererocks
 end
 
 do -- folke/which-key.nvim
+  require("which-key").setup({
+    spec = {
+      { "<leader>d", group = "Debug" },
+      { "<leader>l", group = "LSP" },
+      { "<leader>v", group = "Vim" },
+      { "<leader>c", group = "csv" },
+      { "<leader>f", group = "Find" },
+      { "<leader>g", group = "Git" },
+      { "<leader>j", group = "Json" },
+      { "<leader>n", group = "NeoTest (python)" },
+      { "<leader>m", group = "Molten (jupyter notebook)" },
+      { "<leader>p", group = "Paths" },
+      { "<leader>w", group = "Window" },
+      { "<leader>x", group = "Quickfix" },
+      { "<leader>z", group = "Foldmethod" },
+      { "<leader>s", group = "Snacks" },
+    },
+  })
   vim.keymap.set("n", "<leader>?", function()
     require("which-key").show({ global = false })
-  end, { desc = "Buffer Local Keymaps (which-key)" })
+  end, { desc = "Buffer Local Keymaps" })
 end
 
 do -- 3rd/image.nvim
@@ -222,6 +240,14 @@ do -- nvim-lualine/lualine.nvim
       section_separators = { left = "", right = "" },
       -- theme = "codedark",
       -- theme = "tomorrow_night",
+      ignore_focus = {
+        "dapui_watches",
+        "dapui_breakpoints",
+        "dapui_scopes",
+        "dapui_console",
+        "dapui_stacks",
+        "dap-repl",
+      },
     },
   })
 end

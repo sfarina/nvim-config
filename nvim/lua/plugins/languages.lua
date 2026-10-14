@@ -157,6 +157,7 @@ do -- WhoIsSethDaniel/mason-tool-installer.nvim
       "shellcheck",
       "ansible-lint",
       "clang-format",
+      "cortex-debug",
       "stylua",
       "mdformat",
       "yamlfmt",
@@ -243,3 +244,5 @@ do -- nvim-treesitter/nvim-treesitter-textobjects
 
   require("nvim-treesitter-textobjects").setup()
 end
+
+require("config.dap")

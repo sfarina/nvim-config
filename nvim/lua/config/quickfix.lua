@@ -153,8 +153,12 @@ local function update_gitsigns_preview(qf, item, generation)
     end
 
     local latest_qf, latest_item = current_quickfix_item(quickfix_win)
-    if not latest_qf or not is_gitsigns_list(latest_qf) or not latest_item
-      or item_filename(latest_item) ~= filename or latest_item.lnum ~= item.lnum
+    if
+      not latest_qf
+      or not is_gitsigns_list(latest_qf)
+      or not latest_item
+      or item_filename(latest_item) ~= filename
+      or latest_item.lnum ~= item.lnum
     then
       restore_this_source()
       return
